@@ -10,24 +10,13 @@ import ranking from '../../assets/images/podium.svg';
 import store from '../../assets/images/store.svg';
 import coins from '../../assets/images/coin.svg';
 import avatar from '../../assets/images/profile.svg';
-import soundOn from '../../assets/images/sound-on.svg';
-import soundOff from '../../assets/images/sound-off.svg';
 import next from '../../assets/images/next.svg';
 import prev from '../../assets/images/previous.svg';
 
 import * as S from './styles';
 
 const World = () => {
-  const [sound, setSound] = useState(true);
   const [phase, setPhase] = useState(1);
-
-  const ChangeSound = () => {
-    if (sound) {
-      setSound(false);
-    } else {
-      setSound(true);
-    }
-  };
 
   const ChangePhase = () => {
     if (phase === 1) {
@@ -39,8 +28,7 @@ const World = () => {
 
   return (
     <S.Container>
-      <S.Sound onClick={ChangeSound} src={sound ? soundOn : soundOff} />
-
+      <S.Sound />
       <S.PrevPhase onClick={ChangePhase} src={prev} />
       <S.NextPhase onClick={ChangePhase} src={next} />
 

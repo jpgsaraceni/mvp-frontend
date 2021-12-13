@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import SoundIcon from '../../components/SoundIcon';
 
 export const Container = styled.div`
   height: 100vh;
@@ -6,15 +7,10 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const Sound = styled.img`
-  height: 27px;
+export const Sound = styled(SoundIcon)`
   position: absolute;
   top: 2.5%;
   left: 85%;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export const Phase = styled.img`
