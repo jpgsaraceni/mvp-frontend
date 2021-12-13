@@ -40,11 +40,17 @@ const World = () => {
   return (
     <S.Container>
       <S.Sound onClick={ChangeSound} src={sound ? soundOn : soundOff} />
-      <S.Phase src={phase === 1 ? phase1 : phase2} />
+
       <S.PrevPhase onClick={ChangePhase} src={prev} />
       <S.NextPhase onClick={ChangePhase} src={next} />
+
+      <S.Phase src={phase === 1 ? phase1 : phase2} />
       <S.PhaseName src={phase === 1 ? namePhase1 : namePhase2} phase={phase} />
-      <S.PlayButton src={phase === 1 ? playButton : disablePlayButton} />
+      <S.PlayButton
+        src={phase === 1 ? playButton : disablePlayButton}
+        phase={phase}
+      />
+
       <S.Ranking src={ranking} />
       <S.Store src={store} />
       <S.Coins src={coins} />

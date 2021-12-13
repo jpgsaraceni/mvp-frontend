@@ -18,10 +18,10 @@ export const Sound = styled.img`
 `;
 
 export const Phase = styled.img`
-  height: 283px;
+  height: 35%;
   position: absolute;
-  top: 30%;
-  left: 40%;
+  top: 35%;
+  left: 43%;
 `;
 
 export const NextPhase = styled.img`
@@ -58,22 +58,24 @@ export const PhaseName = styled.img`
   ${({ phase }: PhaseProps) => css`
     height: 3%;
     position: absolute;
-    top: 78%;
+    top: 73%;
     left: ${phase === 1 ? '43%' : '40%'};
   `}
 `;
 
 export const PlayButton = styled.img`
-  height: 15%;
-  position: absolute;
-  top: 85%;
-  left: 48%;
-  transition: all 0.7s ease;
+  ${({ phase }: PhaseProps) => css`
+    height: 15%;
+    position: absolute;
+    top: 80%;
+    left: 48%;
+    transition: all 0.7s ease;
 
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
+    &:hover {
+      cursor: pointer;
+      transform: ${phase === 1 ? 'scale(1.1)' : 'scale(1.0)'};
+    }
+  `}
 `;
 
 export const Ranking = styled.img`
