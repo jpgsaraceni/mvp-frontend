@@ -5,12 +5,10 @@ import Router from './routes';
 
 const App = () => {
   return (
-    <>
       <ThemeProvider theme={defaultTheme}>
         <Router />
         <GlobalStyles />
       </ThemeProvider>
-    </>
   );
 };
 
