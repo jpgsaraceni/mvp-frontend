@@ -6,3 +6,16 @@ export const Points = styled.img`
   top: 2%;
   left: 3%;
 `;
+
+export const Exit = styled.img`
+  height: 60px;
+  position: absolute;
+  bottom: 2%;
+  left: 3%;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
