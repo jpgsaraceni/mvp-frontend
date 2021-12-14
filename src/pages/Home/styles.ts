@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import background from '../../assets/images/home-background.svg';
-import soundOn from '../../assets/images/sound-on.svg';
-import soundOff from '../../assets/images/sound-off.svg';
+import SoundIcon from '../../components/SoundIcon';
 
 export const Container = styled.div`
   width: 100%;
@@ -46,17 +45,8 @@ export const Help = styled.img`
   }
 `;
 
-type SoundProps = {
-  sound: boolean;
-};
-
-export const Sound = styled.img`
-  height: 27px;
+export const Sound = styled(SoundIcon)`
   position: absolute;
   top: 5.7%;
   left: 88%;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
