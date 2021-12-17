@@ -1,10 +1,6 @@
 import styled, { css } from 'styled-components';
 import FlipCard from '../../components/FlipCard';
 
-type IconProps = {
-  display: boolean;
-};
-
 type Props = {
   top: string;
   left: string;
@@ -33,7 +29,6 @@ export const Icon = styled.img<Props>`
     height: ${height};
     top: ${top};
     left: ${left};
-    /* display: none; */
   `}
 `;
 

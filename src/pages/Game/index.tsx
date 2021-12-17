@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Droppable } from 'react-beautiful-dnd';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import GameTemplate from '../../components/GameTemplate';
 import Modal from '../../components/Modal';
 
@@ -39,8 +38,6 @@ import redPandaFront from '../../assets/images/animals/red-panda-front.svg';
 import redPandaBack from '../../assets/images/animals/red-panda-back.svg';
 
 import * as S from './styles';
-
-const type = 'Image';
 
 const cards = [
   {
@@ -292,17 +289,17 @@ const Game = () => {
 
         <S.Exit src={exit} onClick={() => navigateTo('/world')} />
       </GameTemplate>
-      {
-        correctCards.length >= 9 ?
-          <Modal
-            title="PARABÉNS"
-            type="choose_name"
-            message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
-            _openModal={true}
-            onClick={() => navigateTo('/world')}
-          /> 
-        : ""
-      }
+      {correctCards.length >= 9 ? (
+        <Modal
+          title="PARABÉNS"
+          type="choose_name"
+          message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
+          _openModal={true}
+          onClick={() => navigateTo('/world')}
+        />
+      ) : (
+        ''
+      )}
     </DragDropContext>
   );
 };
