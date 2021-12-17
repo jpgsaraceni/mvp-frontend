@@ -38,9 +38,23 @@ import redPandaIcon from '../../assets/images/animals/red-panda.svg';
 import redPandaFront from '../../assets/images/animals/red-panda-front.svg';
 import redPandaBack from '../../assets/images/animals/red-panda-back.svg';
 
+
 import * as S from './styles';
+import { useSound } from '../../hooks/useSound';
+
+import fishSound from '../../assets/sounds/phase/fish_domestic.mp3'
+import catSound from '../../assets/sounds/phase/cat_domestic.mp3'
+import turtleSound from '../../assets/sounds/phase/turtle_domestic.mp3'
+import koalaSound from '../../assets/sounds/phase/koala_jungle.mp3'
+import pandaSound from '../../assets/sounds/phase/panda_jungle.mp3'
+import redPandaSound from '../../assets/sounds/phase/red_panda_jungle.mp3'
+import snowOwlSound from '../../assets/sounds/phase/snow_owl_cold.mp3'
+import polarBearSound from '../../assets/sounds/phase/polar_bear_cold.mp3'
+import penguinSound from '../../assets/sounds/phase/penguin_cold.mp3'
+import { audios } from '../../providers/Music';
 
 const type = 'Image';
+
 
 const cards = [
   {
@@ -51,6 +65,7 @@ const cards = [
     imageBack: penguinBack,
     top: '55%',
     left: '25%',
+    sound: penguinSound
   },
   {
     id: 'snowOwl',
@@ -60,6 +75,7 @@ const cards = [
     imageBack: snowOwlBack,
     top: '55%',
     left: '55%',
+    sound: snowOwlSound
   },
   {
     id: 'polarBear',
@@ -69,6 +85,7 @@ const cards = [
     imageBack: polarBearBack,
     top: '78%',
     left: '50%',
+    sound: polarBearSound
   },
   {
     id: 'fish',
@@ -78,6 +95,7 @@ const cards = [
     imageBack: fishBack,
     top: '55%',
     left: '45%',
+    sound: fishSound
   },
   {
     id: 'cat',
@@ -87,6 +105,7 @@ const cards = [
     imageBack: catBack,
     top: '55%',
     left: '65%',
+    sound: catSound
   },
   {
     id: 'turtle',
@@ -96,6 +115,7 @@ const cards = [
     imageBack: turtleBack,
     top: '78%',
     left: '30%',
+    sound: turtleSound
   },
   {
     id: 'redPanda',
@@ -105,6 +125,7 @@ const cards = [
     imageBack: redPandaBack,
     top: '55%',
     left: '35%',
+    sound: redPandaSound
   },
   {
     id: 'koala',
@@ -114,6 +135,7 @@ const cards = [
     imageBack: koalaBack,
     top: '78%',
     left: '40%',
+    koala: koalaSound
   },
   {
     id: 'panda',
@@ -123,6 +145,7 @@ const cards = [
     imageBack: pandaBack,
     top: '78%',
     left: '60%',
+    sound: pandaSound
   },
 ];
 
@@ -214,6 +237,9 @@ const icons = [
 ];
 
 const Game = () => {
+  const sound = useSound()
+  sound.setBackground(audios.background.phases.world)
+ 
   const navigateTo = useNavigate();
   const [points, setPoints] = useState(100);
   const [correctCards, setCorrectCards] = useState<string[]>([]);
@@ -226,10 +252,14 @@ const Game = () => {
       setCorrectCards((prev) => [...prev, card.id]);
       setUnlockedIcons((prev) => [...prev, card.unlockIconId]);
       setPoints((prev) => prev + 10);
+      sound.playSuccess();
     } else {
       setPoints((prev) => (prev >= 10 ? points - 10 : 0));
+      sound.playError();
     }
   };
+
+  console.log('reload')
 
   const visibleCards = useMemo(() => {
     return cards.filter((card) => !correctCards.includes(card.id));
@@ -275,7 +305,7 @@ const Game = () => {
           {(provided, snapshot) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {visibleCards.map((card, index) => (
-                <S.Card key={index} index={index} {...card} />
+                <S.Card key={index} index={index} {...card} onPointerDown={() => sound.playCard(card.sound)} />
               ))}
             </div>
           )}
@@ -290,17 +320,23 @@ const Game = () => {
           />
         ))}
 
-        <S.Exit src={exit} onClick={() => navigateTo('/world')} />
+        <S.Exit src={exit} onClick={() => {
+          sound.setBackground(audios.background.menu)
+          navigateTo('/world')
+        }} />
       </GameTemplate>
       {
         correctCards.length >= 9 ?
-          <Modal
+        <Modal
             title="PARABÉNS"
             type="choose_name"
             message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
             _openModal={true}
-            onClick={() => navigateTo('/world')}
-          /> 
+            onClick={() => {
+              sound.setBackground(audios.background.menu)
+              navigateTo('/world')
+            }}
+          />
         : ""
       }
     </DragDropContext>
