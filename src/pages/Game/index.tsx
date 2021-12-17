@@ -135,7 +135,7 @@ const cards = [
     imageBack: koalaBack,
     top: '78%',
     left: '40%',
-    koala: koalaSound
+    sound: koalaSound
   },
   {
     id: 'panda',
