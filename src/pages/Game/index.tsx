@@ -259,8 +259,6 @@ const Game = () => {
     }
   };
 
-  console.log('reload')
-
   const visibleCards = useMemo(() => {
     return cards.filter((card) => !correctCards.includes(card.id));
   }, [cards, correctCards]);
