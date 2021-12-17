@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import playbutton from '../../assets/images/play-button.svg';
-import name from '../../assets/images/nameless-game.svg';
+import name from '../../assets/images/droplinguo.svg';
 import help from '../../assets/images/help-button.svg';
 import * as S from './styles';
 

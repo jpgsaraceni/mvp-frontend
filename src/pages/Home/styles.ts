@@ -26,9 +26,9 @@ export const PlayButton = styled.img`
 `;
 
 export const Name = styled.img`
-  height: 27px;
+  height: 40px;
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 76%;
 `;
 
