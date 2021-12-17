@@ -15,4 +15,6 @@ export default createGlobalStyle<ITheme>`
     outline: 0;
     box-sizing: border-box;
   }
+
+  html { font-size: 65.2%; } 
 `;
