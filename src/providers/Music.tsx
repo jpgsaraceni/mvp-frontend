@@ -107,6 +107,7 @@ export const MusicProvider = ({ children }: Props) => {
         const endPlayer = new Audio(audios.events.phaseEnd);
         endPlayer.loop = false;
         endPlayer.muted = false;
+        endPlayer.volume = 0.5;
         endPlayer.play();
     }, [backgroundPlayer]);
 
