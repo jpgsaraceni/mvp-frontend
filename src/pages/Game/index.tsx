@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Droppable } from 'react-beautiful-dnd';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import GameTemplate from '../../components/GameTemplate';
 import Modal from '../../components/Modal';
 
@@ -52,8 +51,6 @@ import snowOwlSound from '../../assets/sounds/phase/snow_owl_cold.mp3'
 import polarBearSound from '../../assets/sounds/phase/polar_bear_cold.mp3'
 import penguinSound from '../../assets/sounds/phase/penguin_cold.mp3'
 import { audios } from '../../providers/Music';
-
-const type = 'Image';
 
 
 const cards = [
@@ -323,6 +320,7 @@ const Game = () => {
           navigateTo('/world')
         }} />
       </GameTemplate>
+
       {
         correctCards.length >= 9 ?
         <Modal
@@ -337,6 +335,7 @@ const Game = () => {
           />
         : ""
       }
+
     </DragDropContext>
   );
 };
