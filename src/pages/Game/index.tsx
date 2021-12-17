@@ -293,7 +293,7 @@ const Game = () => {
         <S.Exit src={exit} onClick={() => navigateTo('/world')} />
       </GameTemplate>
       {
-        points >= 190 ?
+        correctCards.length >= 9 ?
           <Modal
             title="PARABÉNS"
             type="choose_name"
