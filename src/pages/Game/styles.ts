@@ -1,50 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import FlipCard from '../../components/FlipCard';
 
-export const Penguin = styled(FlipCard)`
-  position: absolute;
-  top: 55%;
-  left: 25%;
+type IconProps = {
+  display: boolean;
+};
+
+type Props = {
+  top: string;
+  left: string;
+};
+
+export const Card = styled(FlipCard)<Props>`
+  ${({ top, left }) => css`
+    position: absolute;
+    left: ${left};
+    top: ${top};
+  `}
 `;
-export const RedPanda = styled(FlipCard)`
-  position: absolute;
-  top: 55%;
-  left: 35%;
+
+export const Board = styled.div<Props>`
+  ${({ top, left }) => css`
+    height: 206px;
+    position: absolute;
+    left: ${left};
+    top: ${top};
+  `}
 `;
-export const Fish = styled(FlipCard)`
-  position: absolute;
-  top: 55%;
-  left: 45%;
-`;
-export const SnowOwl = styled(FlipCard)`
-  position: absolute;
-  top: 55%;
-  left: 55%;
-`;
-export const Cat = styled(FlipCard)`
-  position: absolute;
-  top: 55%;
-  left: 65%;
-`;
-export const Turtle = styled(FlipCard)`
-  position: absolute;
-  top: 78%;
-  left: 30%;
-`;
-export const Koala = styled(FlipCard)`
-  position: absolute;
-  top: 78%;
-  left: 40%;
-`;
-export const PolarBear = styled(FlipCard)`
-  position: absolute;
-  top: 78%;
-  left: 50%;
-`;
-export const Panda = styled(FlipCard)`
-  position: absolute;
-  top: 78%;
-  left: 60%;
+
+export const Icon = styled.img<Props>`
+  ${({ top, height, left }) => css`
+    position: absolute;
+    height: ${height};
+    top: ${top};
+    left: ${left};
+    /* display: none; */
+  `}
 `;
 
 export const Points = styled.img`
@@ -54,40 +44,14 @@ export const Points = styled.img`
   left: 3%;
 `;
 
-export const FirstBoard = styled.img`
-  height: 206px;
+export const PointsValue = styled.div`
+  height: 35px;
   position: absolute;
-  top: 20%;
-  left: 10%;
-  transition: all 0.7s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
-export const SecondBoard = styled.img`
-  height: 206px;
-  position: absolute;
-  top: 20%;
-  left: 37%;
-  transition: all 0.7s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
-export const ThirdBoard = styled.img`
-  height: 206px;
-  position: absolute;
-  top: 20%;
-  left: 64%;
-  transition: all 0.7s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
+  top: 3%;
+  left: 6.5%;
+  font-family: 'Source Sans 3', sans-serif;
+  color: white;
+  font-weight: bold;
 `;
 
 export const Exit = styled.img`
