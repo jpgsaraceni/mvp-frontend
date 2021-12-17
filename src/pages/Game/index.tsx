@@ -258,9 +258,6 @@ const Game = () => {
                 ref={provided.innerRef}
                 left={board.left}
                 top={board.top}
-                style={{
-                  backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey',
-                }}
                 {...provided.droppableProps}
               >
                 <img src={board.src} />
@@ -275,13 +272,7 @@ const Game = () => {
           type="card"
         >
           {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={{
-                backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey',
-              }}
-              {...provided.droppableProps}
-            >
+            <div ref={provided.innerRef} {...provided.droppableProps}>
               {visibleCards.map((card, index) => (
                 <S.Card key={index} index={index} {...card} />
               ))}
