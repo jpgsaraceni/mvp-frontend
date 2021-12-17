@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import GameTemplate from '../../components/GameTemplate';
+import Modal from '../../components/Modal';
 
 import pointsIcon from '../../assets/images/points.svg';
 import exit from '../../assets/images/exit-button.svg';
@@ -291,6 +292,17 @@ const Game = () => {
 
         <S.Exit src={exit} onClick={() => navigateTo('/world')} />
       </GameTemplate>
+      {
+        correctCards.length >= 9 ?
+          <Modal
+            title="PARABÉNS"
+            type="choose_name"
+            message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
+            _openModal={true}
+            onClick={() => navigateTo('/world')}
+          /> 
+        : ""
+      }
     </DragDropContext>
   );
 };
