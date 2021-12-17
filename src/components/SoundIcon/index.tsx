@@ -3,16 +3,21 @@ import React, { useState } from 'react';
 import soundOn from '../../assets/images/sound-on.svg';
 import soundOff from '../../assets/images/sound-off.svg';
 import * as S from './styles';
+import { useSound } from '../../hooks/useSound';
 
 type Props = {
   className?: string;
 };
 
 const SoundIcon = ({ className }: Props) => {
-  const [sound, setSound] = useState(true);
+  const audio = useSound()
+  const muted = !audio.isMuted()
+  const [sound, setSound] = useState(muted);
 
   const onChangeSound = () => {
-    setSound((sound) => !sound);
+    const soundStatus = !sound;
+    setSound(soundStatus);
+    audio.toggleAudio()
   };
 
   return (

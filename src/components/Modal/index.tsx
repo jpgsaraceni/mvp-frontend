@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSound } from '../../hooks/useSound';
 import * as S from './styles';
 
 type ModalProps = {
@@ -23,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({
   children
 }) => {
   const [openModal, setOpenModal] = useState(_openModal);
+  const sound = useSound();
 
   return (
     <S.Container
@@ -106,6 +108,7 @@ const Modal: React.FC<ModalProps> = ({
                 </>
                 : type === 'choose_name' ?
                   <>
+                    {sound.playPhaseEnd()}
                     <S.SessionTitle>
                       {title}
                     </S.SessionTitle>
