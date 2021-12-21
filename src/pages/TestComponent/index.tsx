@@ -2,7 +2,6 @@
 import ModalStatus from '../../components/ModalStatus';
 
 const TestComponent = () => {
-
   return (
     // <Modal title="RANKING" type="ranking" _openModal={true} />
     // <Modal title="LOGIN" type="login" _openModal={true} />

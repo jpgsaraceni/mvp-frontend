@@ -32,3 +32,13 @@ export const Avatar = styled.img`
     transform: scale(1.1);
   }
 `;
+
+export const UserName = styled.div`
+  font-size: 16px;
+  position: absolute;
+  top: 3%;
+  left: 92.5%;
+  font-family: 'Source Sans 3', sans-serif;
+  color: white;
+  font-weight: bold;
+`;
