@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
-import jwt from 'jsonwebtoken';
 import { useCookies } from 'react-cookie';
 import { bffapi } from '../services/bffapi';
 
@@ -41,14 +40,13 @@ export const UserProvider = ({ children }: Props) => {
   const signIn = async ({ email, password }: Props) => {
     try {
       setUserError('');
-      const response = await bffapi.get('/login', {
+      const userData = await bffapi.get('/login', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
 
-      const userData = await jwt.decode(response.data.token);
       login(userData);
     } catch (error: any) {
       if (error.response.status !== 200) {
