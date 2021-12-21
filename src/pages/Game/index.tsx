@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import GameTemplate from '../../components/GameTemplate';
@@ -39,6 +39,7 @@ import redPandaBack from '../../assets/images/animals/red-panda-back.svg';
 
 import * as S from './styles';
 import { useSound } from '../../hooks/useSound';
+import { bffapi } from '../../services/bffapi';
 
 import fishSound from '../../assets/sounds/phase/fish_domestic.mp3';
 import catSound from '../../assets/sounds/phase/cat_domestic.mp3';
@@ -239,6 +240,7 @@ const Game = () => {
   const [points, setPoints] = useState(100);
   const [correctCards, setCorrectCards] = useState<string[]>([]);
   const [unlockedIcons, setUnlockedIcons] = useState<string[]>([]);
+  const nameRef = useRef<any>();
 
   const onDragEng = (e: any) => {
     const card = cards.find((card) => card.id === e.draggableId);
@@ -251,6 +253,17 @@ const Game = () => {
     } else {
       setPoints((prev) => (prev >= 10 ? points - 10 : 0));
       sound.playError();
+    }
+  };
+
+  const handleRanking = async () => {
+    try {
+      await bffapi.post('/ranking', {
+        name: nameRef.current.value,
+        score: points,
+      });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -331,11 +344,17 @@ const Game = () => {
         <Modal
           title="PARABÉNS"
           type="choose_name"
+          RankingInput={<input type="text" placeholder="NOME" ref={nameRef} />}
           message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
           _openModal={true}
-          onClick={() => {
-            sound.setBackground(audios.background.menu);
-            navigateTo('/world');
+          onClick={async () => {
+            try {
+              await handleRanking();
+              sound.setBackground(audios.background.menu);
+              navigateTo('/world');
+            } catch (err) {
+              console.log(err);
+            }
           }}
         />
       ) : (

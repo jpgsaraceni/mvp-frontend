@@ -10,6 +10,7 @@ type ModalProps = {
   message?: string;
   children?: any;
   _openModal?: boolean;
+  RankingInput?: object;
   onClick?: any;
 };
 
@@ -21,6 +22,7 @@ const Modal: React.FC<ModalProps> = ({
   _openModal,
   message,
   onClick,
+  RankingInput,
   children
 }) => {
   const [openModal, setOpenModal] = useState(_openModal);
@@ -115,7 +117,7 @@ const Modal: React.FC<ModalProps> = ({
                     <S.ModalMessage>
                       {message}
                     </S.ModalMessage>
-                    <input type="text" placeholder="NOME" />
+                    {RankingInput}
                     <div>
                       <input type="checkbox" id="keep-name" />
                       <label htmlFor="keep-name">LEMBRAR DA DECISÃO</label>
