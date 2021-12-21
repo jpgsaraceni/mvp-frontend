@@ -12,10 +12,11 @@ type Props = {
 
 const GameTemplate = ({ children }: Props) => {
   const [openLogin, setOpenLogin] = useState(false);
-  const { user }: any = useUser();
+  const { cookies } = useUser();
+  const playerName = localStorage.getItem('@droplingo:name');
 
   const checkUser = () => {
-    if (!user) setOpenLogin(true);
+    if (!cookies.get('auth')) setOpenLogin(true);
   };
 
   return (
@@ -23,7 +24,7 @@ const GameTemplate = ({ children }: Props) => {
       <S.Sound />
       <S.Coins src={coins} />
       <S.Avatar src={avatar} onClick={checkUser} />
-      {user ? <S.UserName onClick={checkUser}>{user.name}</S.UserName> : ''}
+      {playerName ? <S.UserName onClick={checkUser}>{playerName}</S.UserName> : ''}
       {children}
 
       <Modal
