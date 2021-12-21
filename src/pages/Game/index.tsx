@@ -240,6 +240,7 @@ const Game = () => {
   const [points, setPoints] = useState(100);
   const [correctCards, setCorrectCards] = useState<string[]>([]);
   const [unlockedIcons, setUnlockedIcons] = useState<string[]>([]);
+  const [openModal, setOpenModal] = useState(true);
   const nameRef = useRef<any>();
 
   const onDragEng = (e: any) => {
@@ -346,7 +347,8 @@ const Game = () => {
           type="choose_name"
           RankingInput={<input type="text" placeholder="NOME" ref={nameRef} />}
           message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
-          _openModal={true}
+          open={openModal}
+          onClose={() => setOpenModal(false)}
           onClick={async () => {
             try {
               await handleRanking();

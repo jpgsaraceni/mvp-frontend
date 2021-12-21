@@ -40,7 +40,7 @@ export const Points = styled.img`
 `;
 
 export const PointsValue = styled.div`
-  height: 35px;
+  font-size: 16px;
   position: absolute;
   top: 3%;
   left: 6.5%;
