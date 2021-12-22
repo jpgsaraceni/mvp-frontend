@@ -70,6 +70,7 @@ const Modal: React.FC<ModalProps> = ({
   const { signIn } = useUser();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [modalType, setModalType] = useState(type);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -81,7 +82,7 @@ const Modal: React.FC<ModalProps> = ({
       <S.ModalContainer width={width} height={height} type={type}>
         <S.CloseIcon onClick={onClose} />
         <S.Content>
-          {type === 'ranking' ? (
+          {modalType === 'ranking' ? (
             <>
               <S.RankingTitle>{title}</S.RankingTitle>
               <S.TopRanksTable>
@@ -94,7 +95,7 @@ const Modal: React.FC<ModalProps> = ({
                 ))}
               </S.TopRanksTable>
             </>
-          ) : type === 'login' ? (
+          ) : modalType === 'login' ? (
             <>
               <S.SessionTitle>{title}</S.SessionTitle>
               <form onSubmit={handleSubmit}>
@@ -116,18 +117,18 @@ const Modal: React.FC<ModalProps> = ({
                 </div>
                 <button type="submit">ENTRAR</button>
               </form>
-              <S.SwitchModal>CADASTRAR</S.SwitchModal>
+              <S.SwitchModal onClick={()=>setModalType('signin')}>CADASTRAR</S.SwitchModal>
             </>
-          ) : type === 'signin' ? (
+          ) : modalType === 'signin' ? (
             <>
               <S.SessionTitle>{title}</S.SessionTitle>
               <input type="text" placeholder="EMAIL" />
               <input type="password" placeholder="SENHA" />
               <input type="password" placeholder="CONFIRMAR SENHA" />
               <button type="submit">CADASTRAR</button>
-              <S.SwitchModal>LOGIN</S.SwitchModal>
+              <S.SwitchModal onClick={()=>setModalType('login')}>LOGIN</S.SwitchModal>
             </>
-          ) : type === 'choose_name' ? (
+          ) : modalType === 'choose_name' ? (
             <>
               {sound.playPhaseEnd()}
               <S.SessionTitle>{title}</S.SessionTitle>
@@ -141,7 +142,7 @@ const Modal: React.FC<ModalProps> = ({
                 CONFIRMAR
               </button>
             </>
-          ) : type === 'store' ? (
+          ) : modalType === 'store' ? (
             <>
               <S.SessionTitle>{title}</S.SessionTitle>
               <S.ModalMessage>{message}</S.ModalMessage>
