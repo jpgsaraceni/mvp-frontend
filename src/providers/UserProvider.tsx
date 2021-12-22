@@ -15,14 +15,16 @@ type Props = {
   password?: string;
 };
 
+interface IUserContext {
+  logout: () => void;
+  login: ({ name, token }: any) => void;
+  signIn: (email: String, password: String) => Promise<void>;
+  register: (name: String, email: String, password: String) => Promise<Boolean>;
+  userError: any;
+  cookies: any;
+}
 
-export const UserContext = createContext({
-  logout: (params: any) => {},
-  login: (params: any) => {},
-  signIn: (params: any) => {},
-  userError: '',
-  cookies: '' as any,
-});
+export const UserContext = createContext({} as IUserContext);
 
 export const UserProvider = ({ children }: Props) => {
   const [userError, setUserError] = useState('');
@@ -47,7 +49,7 @@ export const UserProvider = ({ children }: Props) => {
     cookies.remove('auth');
   }, [cookies]);
 
-  const signIn = async ({ email, password }: Props) => {
+  const signIn = async (email: String, password: String): Promise<void> => {
     try {
       setUserError('');
       const userData = await bffapi.post('/login', null, {
@@ -60,9 +62,7 @@ export const UserProvider = ({ children }: Props) => {
       login(userData.data);
     } catch (error: any) {
       if (error.response.status !== 200) {
-        setUserError(
-          error.response.data.error
-        );
+        setUserError(error.response.data.error);
         console.log(error.response.data.error);
         console.log(userError);
         setTimeout(() => {
@@ -72,10 +72,24 @@ export const UserProvider = ({ children }: Props) => {
     }
   };
 
+  const register = async (name: String, email: String, password: String): Promise<Boolean> => {
+    try {
+      const result = await bffapi.post('/register', {
+        email: email,
+        name: name,
+        password: password
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
         userError,
+        register,
         logout,
         login,
         signIn,

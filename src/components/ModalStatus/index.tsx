@@ -8,7 +8,7 @@ type ModalProps = {
   title?: string;
   message?: string;
   children?: any;
-  _openModal?: boolean;
+  isOpen?: boolean;
   onClick?: any;
 };
 
@@ -17,12 +17,12 @@ const Modal: React.FC<ModalProps> = ({
   height,
   type,
   title,
-  _openModal,
+  isOpen,
   message,
   onClick,
   children
 }) => {
-  const [openModal, setOpenModal] = useState(_openModal);
+  const [openModal, setOpenModal] = useState(isOpen);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
