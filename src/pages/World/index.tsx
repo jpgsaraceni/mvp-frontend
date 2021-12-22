@@ -17,7 +17,7 @@ import Modal from '../../components/Modal';
 import * as S from './styles';
 
 const World = () => {
-  const { user }: any = useUser();
+  const { cookies } = useUser();
   const [phase, setPhase] = useState(1);
   const [openRanking, setOpenRanking] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
@@ -32,7 +32,7 @@ const World = () => {
   };
 
   const openStore = () => {
-    if (user) {
+    if (cookies.get('auth')) {
       navigateTo('/store');
     } else {
       setOpenLogin(true);

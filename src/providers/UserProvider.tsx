@@ -1,5 +1,11 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
-import { useCookies } from 'react-cookie';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
+import Cookies from 'universal-cookie';
 import { bffapi } from '../services/bffapi';
 
 type Props = {
@@ -9,53 +15,56 @@ type Props = {
   password?: string;
 };
 
+
 export const UserContext = createContext({
-  user: {} as any,
-  setUser: (params: any) => {},
   logout: (params: any) => {},
   login: (params: any) => {},
   signIn: (params: any) => {},
   userError: '',
-  cookies: [] as any,
-  setCookies: (params: any, params2: any) => {},
+  cookies: '' as any,
 });
 
 export const UserProvider = ({ children }: Props) => {
-  const [user, setUser] = useState([]);
   const [userError, setUserError] = useState('');
-  const [cookies, setCookies, removeCookies] = useCookies(['auth']);
+  const cookies = useMemo(() => {
+    return new Cookies();
+  }, []);
 
-  const login = useCallback(({ email, name }) => {
-    const userData = [{ email, name }];
+  const login = useCallback(({ name, token }) => {
+    const userData = [
+      {
+        name: name,
+        token: token,
+      },
+    ];
+    console.log(userData);
 
-    setUser(userData as any);
+    localStorage.setItem('@droplingo:name', userData[0].name);
     return true;
   }, []);
 
   const logout = useCallback(() => {
-    setUser([]);
-    removeCookies('auth');
-  }, [removeCookies]);
+    cookies.remove('auth');
+  }, [cookies]);
 
   const signIn = async ({ email, password }: Props) => {
     try {
       setUserError('');
-      const userData = await bffapi.get('/login', {
+      const userData = await bffapi.post('/login', null, {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
 
-      login(userData);
+      cookies.set('auth', userData.data.token);
+      login(userData.data);
     } catch (error: any) {
       if (error.response.status !== 200) {
-        const pathError = Object.keys(
-          error.response.data.message.criticalErrors,
-        )[0];
         setUserError(
-          error.response.data.message.criticalErrors[pathError].message,
+          error.response.data.error
         );
+        console.log(error.response.data.error);
+        console.log(userError);
         setTimeout(() => {
           setUserError('');
         }, 2500);
@@ -66,14 +75,11 @@ export const UserProvider = ({ children }: Props) => {
   return (
     <UserContext.Provider
       value={{
-        user,
-        setUser,
+        userError,
         logout,
         login,
         signIn,
-        userError,
         cookies,
-        setCookies,
       }}
     >
       {children}

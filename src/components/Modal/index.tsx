@@ -1,6 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useSound } from '../../hooks/useSound';
 import { useUser } from '../../providers/UserProvider';
+import { bffapi } from '../../services/bffapi';
 import * as S from './styles';
 
 const topPlayers = [
@@ -54,6 +55,12 @@ type ModalProps = {
   onClose?: () => void;
 };
 
+type RankingProps = {
+  position: Number,
+  name: String,
+  score: Number,
+}
+
 const Modal: React.FC<ModalProps> = ({
   width,
   height,
@@ -70,12 +77,23 @@ const Modal: React.FC<ModalProps> = ({
   const { signIn } = useUser();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [ranking, setRanking] = useState<RankingProps[]>([]);
   const [modalType, setModalType] = useState(type);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     signIn({ email, password });
   };
+
+  useEffect(() => {
+    const req = async () => {
+      try {
+        const result = await bffapi.get('/ranking');
+        setRanking(result.data);
+      } catch (error) {}
+    };
+    req();
+  }, []);
 
   return (
     <S.Container open={open}>
@@ -86,12 +104,14 @@ const Modal: React.FC<ModalProps> = ({
             <>
               <S.RankingTitle>{title}</S.RankingTitle>
               <S.TopRanksTable>
-                {topPlayers.map((player) => (
-                  <S.PlaceRanking>
+                {ranking.map((player, i) => (
+                  <tbody>
+                  <S.PlaceRanking key={i}>
                     <td>#{player.position}</td>
                     <td>{player.name}</td>
                     <td>{player.score}</td>
                   </S.PlaceRanking>
+                  </tbody>
                 ))}
               </S.TopRanksTable>
             </>
@@ -115,7 +135,7 @@ const Modal: React.FC<ModalProps> = ({
                   <input type="checkbox" id="keep-login" />
                   <label htmlFor="keep-login">MANTER CONECTADO</label>
                 </div>
-                <button type="submit">ENTRAR</button>
+                <button type="submit" onClick={onClick}>ENTRAR</button>
               </form>
               <S.SwitchModal onClick={()=>setModalType('signin')}>CADASTRAR</S.SwitchModal>
             </>

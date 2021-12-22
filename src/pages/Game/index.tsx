@@ -51,6 +51,7 @@ import snowOwlSound from '../../assets/sounds/phase/snow_owl_cold.mp3';
 import polarBearSound from '../../assets/sounds/phase/polar_bear_cold.mp3';
 import penguinSound from '../../assets/sounds/phase/penguin_cold.mp3';
 import { audios } from '../../providers/Music';
+import { useUser } from '../../providers/UserProvider';
 
 const cards = [
   {
@@ -241,6 +242,7 @@ const Game = () => {
   const [correctCards, setCorrectCards] = useState<string[]>([]);
   const [unlockedIcons, setUnlockedIcons] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(true);
+  const userSession = useUser();
   const nameRef = useRef<any>();
 
   const onDragEng = (e: any) => {
