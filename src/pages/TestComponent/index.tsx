@@ -1,10 +1,10 @@
-// import Modal from '../../components/Modal';
-import ModalStatus from '../../components/ModalStatus';
+import Modal from '../../components/Modal';
+// import ModalStatus from '../../components/ModalStatus';
 
 const TestComponent = () => {
   return (
     // <Modal title="RANKING" type="ranking" _openModal={true} />
-    // <Modal title="LOGIN" type="login" _openModal={true} />
+    <Modal title="LOGIN" type="login" open={true} />
     // <Modal 
     //   title="PARABÉNS" 
     //   type="choose_name" 
@@ -16,11 +16,11 @@ const TestComponent = () => {
     //   message="ALGUMA COISA DEU ERRADO" 
     //   _openModal={true} 
     // />
-    <ModalStatus 
-      type="success" 
-      message="FINALIZADO COM SUCESSO" 
-      _openModal={true} 
-    />
+    // <ModalStatus 
+    //   type="success" 
+    //   message="FINALIZADO COM SUCESSO" 
+    //   _openModal={true} 
+    // />
     // <Modal
     //   title="QUASE LÁ!"
     //   type="store"

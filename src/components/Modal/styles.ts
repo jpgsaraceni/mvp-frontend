@@ -108,6 +108,13 @@ export const Content = styled.div`
       opacity: 0.9;
     }
   }
+
+  form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 `;
 
 export const RankingTitle = styled.span`
