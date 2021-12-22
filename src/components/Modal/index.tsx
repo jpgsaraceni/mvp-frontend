@@ -1,8 +1,9 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState, useRef } from 'react';
 import { useSound } from '../../hooks/useSound';
 import { useUser } from '../../providers/UserProvider';
 import { bffapi } from '../../services/bffapi';
 import * as S from './styles';
+import ModalStatus from '../../components/ModalStatus';
 
 const topPlayers = [
   {
@@ -74,15 +75,21 @@ const Modal: React.FC<ModalProps> = ({
   children,
 }) => {
   const sound = useSound();
-  const { signIn } = useUser();
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const { signIn, register } = useUser();
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
   const [ranking, setRanking] = useState<RankingProps[]>([]);
   const [modalType, setModalType] = useState(type);
 
-  const handleSubmit = (e: any) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const emailRegisterRef = useRef<HTMLInputElement>(null);
+  const nameRegisterRef = useRef<HTMLInputElement>(null);
+  const passwordRegisterRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    signIn({ email, password });
+    await signIn(emailRef.current!.value, passwordRef.current!.value);
   };
 
   useEffect(() => {
@@ -120,32 +127,35 @@ const Modal: React.FC<ModalProps> = ({
               <S.SessionTitle>{title}</S.SessionTitle>
               <form onSubmit={handleSubmit}>
                 <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  ref={emailRef}
                   type="text"
                   placeholder="EMAIL"
                 />
                 <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  ref={passwordRef}
                   type="password"
                   placeholder="SENHA"
                 />
-                <div>
-                  <input type="checkbox" id="keep-login" />
-                  <label htmlFor="keep-login">MANTER CONECTADO</label>
-                </div>
                 <button type="submit" onClick={onClick}>ENTRAR</button>
               </form>
-              <S.SwitchModal onClick={()=>setModalType('signin')}>CADASTRAR</S.SwitchModal>
+              <S.SwitchModal onClick={()=>setModalType('signup')}>CADASTRAR</S.SwitchModal>
             </>
-          ) : modalType === 'signin' ? (
+          ) : modalType === 'signup' ? (
             <>
-              <S.SessionTitle>{title}</S.SessionTitle>
-              <input type="text" placeholder="EMAIL" />
-              <input type="password" placeholder="SENHA" />
+              <S.SessionTitle>CADASTRAR</S.SessionTitle>
+              <input type="text" ref={emailRegisterRef} placeholder="EMAIL" />
+              <input type="text" ref={nameRegisterRef} placeholder="NOME" />
+              <input type="password" ref={passwordRegisterRef} placeholder="SENHA" />
               <input type="password" placeholder="CONFIRMAR SENHA" />
-              <button type="submit">CADASTRAR</button>
+              <button type="submit" onClick={async () => {
+                try {
+                  register(nameRegisterRef.current!.value, emailRegisterRef.current!.value, passwordRegisterRef.current!.value)
+                } catch (e) {
+                  console.log(e);
+                  setOpenModal(true);
+                  <ModalStatus type="error" message='Erro ao cadastrar' isOpen={openModal} />
+                }
+              }}>CADASTRAR</button>
               <S.SwitchModal onClick={()=>setModalType('login')}>LOGIN</S.SwitchModal>
             </>
           ) : modalType === 'choose_name' ? (
