@@ -243,8 +243,8 @@ const Game = () => {
   const [correctCards, setCorrectCards] = useState<string[]>([]);
   const [unlockedIcons, setUnlockedIcons] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(true);
-  const userSession = useUser();
-  const nameRef = useRef<any>();
+  const { cookies, setCoins } = useUser();
+  const nameRef = useRef<any>(null);
 
   const onDragEng = (e: any) => {
     const card = cards.find((card) => card.id === e.draggableId);
@@ -261,11 +261,22 @@ const Game = () => {
   };
 
   const handleRanking = async () => {
+    console.log(nameRef.current);
     try {
       await bffapi.post('/ranking', {
-        name: nameRef.current.value,
+        name: nameRef.current ? nameRef.current.value : localStorage.getItem("@droplingo:name"),
         score: points,
       });
+      if(cookies.get('auth')) {
+        const result = await bffapi.put('/coins', {
+          coins: points / 10,
+        }, {
+          headers: {
+            Authorization: `Basic ${cookies.get('auth')}`
+          }
+        })
+        setCoins(Number(result.data));
+      }
     } catch (err) {
       console.log(err);
     }
