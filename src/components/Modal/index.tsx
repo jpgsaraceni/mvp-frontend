@@ -5,43 +5,11 @@ import { bffapi } from '../../services/bffapi';
 import * as S from './styles';
 import ModalStatus from '../../components/ModalStatus';
 
-const topPlayers = [
-  {
-    position: 1,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 2,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 3,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 4,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 5,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 6,
-    name: 'Juliana',
-    score: 190,
-  },
-  {
-    position: 7,
-    name: 'Juliana',
-    score: 190,
-  },
-];
+import visaIcon from '../../assets/images/visa.svg';
+import boletoIcon from '../../assets/images/boleto.svg';
+import eloIcon from '../../assets/images/elo.svg';
+import mastercardIcon from '../../assets/images/mastercard.svg';
+import pixIcon from '../../assets/images/pix.svg';
 
 type ModalProps = {
   width?: string;
@@ -57,10 +25,10 @@ type ModalProps = {
 };
 
 type RankingProps = {
-  position: Number,
-  name: String,
-  score: Number,
-}
+  position: Number;
+  name: String;
+  score: Number;
+};
 
 const Modal: React.FC<ModalProps> = ({
   width,
@@ -113,11 +81,11 @@ const Modal: React.FC<ModalProps> = ({
               <S.TopRanksTable>
                 {ranking.map((player, i) => (
                   <tbody>
-                  <S.PlaceRanking key={i}>
-                    <td>#{player.position}</td>
-                    <td>{player.name}</td>
-                    <td>{player.score}</td>
-                  </S.PlaceRanking>
+                    <S.PlaceRanking key={i}>
+                      <td>#{player.position}</td>
+                      <td>{player.name}</td>
+                      <td>{player.score}</td>
+                    </S.PlaceRanking>
                   </tbody>
                 ))}
               </S.TopRanksTable>
@@ -126,37 +94,52 @@ const Modal: React.FC<ModalProps> = ({
             <>
               <S.SessionTitle>{title}</S.SessionTitle>
               <form onSubmit={handleSubmit}>
-                <input
-                  ref={emailRef}
-                  type="text"
-                  placeholder="EMAIL"
-                />
-                <input
-                  ref={passwordRef}
-                  type="password"
-                  placeholder="SENHA"
-                />
-                <button type="submit" onClick={onClick}>ENTRAR</button>
+                <input ref={emailRef} type="text" placeholder="EMAIL" />
+                <input ref={passwordRef} type="password" placeholder="SENHA" />
+                <button type="submit" onClick={onClick}>
+                  ENTRAR
+                </button>
               </form>
-              <S.SwitchModal onClick={()=>setModalType('signup')}>CADASTRAR</S.SwitchModal>
+              <S.SwitchModal onClick={() => setModalType('signup')}>
+                CADASTRAR
+              </S.SwitchModal>
             </>
           ) : modalType === 'signup' ? (
             <>
               <S.SessionTitle>CADASTRAR</S.SessionTitle>
               <input type="text" ref={emailRegisterRef} placeholder="EMAIL" />
               <input type="text" ref={nameRegisterRef} placeholder="NOME" />
-              <input type="password" ref={passwordRegisterRef} placeholder="SENHA" />
+              <input
+                type="password"
+                ref={passwordRegisterRef}
+                placeholder="SENHA"
+              />
               <input type="password" placeholder="CONFIRMAR SENHA" />
-              <button type="submit" onClick={async () => {
-                try {
-                  register(nameRegisterRef.current!.value, emailRegisterRef.current!.value, passwordRegisterRef.current!.value)
-                } catch (e) {
-                  console.log(e);
-                  setOpenModal(true);
-                  <ModalStatus type="error" message='Erro ao cadastrar' isOpen={openModal} />
-                }
-              }}>CADASTRAR</button>
-              <S.SwitchModal onClick={()=>setModalType('login')}>LOGIN</S.SwitchModal>
+              <button
+                type="submit"
+                onClick={async () => {
+                  try {
+                    register(
+                      nameRegisterRef.current!.value,
+                      emailRegisterRef.current!.value,
+                      passwordRegisterRef.current!.value,
+                    );
+                  } catch (e) {
+                    console.log(e);
+                    setOpenModal(true);
+                    <ModalStatus
+                      type="error"
+                      message="Erro ao cadastrar"
+                      isOpen={openModal}
+                    />;
+                  }
+                }}
+              >
+                CADASTRAR
+              </button>
+              <S.SwitchModal onClick={() => setModalType('login')}>
+                LOGIN
+              </S.SwitchModal>
             </>
           ) : modalType === 'choose_name' ? (
             <>
@@ -177,9 +160,44 @@ const Modal: React.FC<ModalProps> = ({
               <S.SessionTitle>{title}</S.SessionTitle>
               <S.ModalMessage>{message}</S.ModalMessage>
               <div>
-                <button type="submit">CANCELAR</button>
-                <button type="submit">ACEITAR</button>
+                <S.CancelButton onClick={onClose}>CANCELAR</S.CancelButton>
+                <button onClick={() => setModalType('payment')} type="submit">
+                  ACEITAR
+                </button>
               </div>
+            </>
+          ) : modalType === 'payment' ? (
+            <>
+              <S.SessionTitle>ESCOLHA A FORMA DE PAGAMENTO</S.SessionTitle>
+              <div>
+                <S.Visa
+                  src={visaIcon}
+                  onClick={() => setModalType('successfulpayment')}
+                />
+                <S.Boleto
+                  src={boletoIcon}
+                  onClick={() => setModalType('successfulpayment')}
+                />
+                <S.Elo
+                  src={eloIcon}
+                  onClick={() => setModalType('successfulpayment')}
+                />
+                <S.Mastercard
+                  src={mastercardIcon}
+                  onClick={() => setModalType('successfulpayment')}
+                />
+                <S.Pix
+                  src={pixIcon}
+                  onClick={() => setModalType('successfulpayment')}
+                />
+              </div>
+            </>
+          ) : modalType === 'successfulpayment' ? (
+            <>
+              <S.SessionTitle>COMPRA REALIZADA!</S.SessionTitle>
+              <S.ModalMessage>
+                SUA COMPRA FOI REALIZADA COM SUCESSO
+              </S.ModalMessage>
             </>
           ) : (
             <>{children}</>
