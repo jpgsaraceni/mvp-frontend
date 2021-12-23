@@ -22,12 +22,15 @@ interface IUserContext {
   register: (name: String, email: String, password: String) => Promise<Boolean>;
   userError: any;
   cookies: any;
+  coins: Number;
+  setCoins: any
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 export const UserProvider = ({ children }: Props) => {
   const [userError, setUserError] = useState('');
+  const [coins, setCoins] = useState(0);
   const cookies = useMemo(() => {
     return new Cookies();
   }, []);
@@ -90,6 +93,8 @@ export const UserProvider = ({ children }: Props) => {
       value={{
         userError,
         register,
+        coins,
+        setCoins,
         logout,
         login,
         signIn,
