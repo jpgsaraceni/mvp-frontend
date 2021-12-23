@@ -37,7 +37,7 @@ const GameTemplate = ({ children }: Props) => {
       }
     }
     req();
-  }, [cookies, setCoins, coins])
+  }, [cookies.get('auth'), setCoins, coins, cookies])
 
   return (
     <S.Container>
