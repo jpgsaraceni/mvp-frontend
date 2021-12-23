@@ -12,8 +12,6 @@ They can use their coinz to buy stuff from the store. They can also buy (with re
 
 This game may be adapted into an educational SaaS. Schools or teachers would subscribe to the service and have the possibility of customizing the levels, assigning homework and following their students' delopment.
 
-Vou deixar o repositório vazio mesmo porque quando vocês derem o create react-app podem colocar alguma configuração.
-
 ## Running locally
 
 The back end of this project is not yet hosted anywhere, so for it to work you should run the server locally. You can clone the projecto from [this repo](https://github.com/jpgsaraceni/mvp-backend).
