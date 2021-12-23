@@ -85,12 +85,12 @@ type Props = {
 
 export const CardDetails = styled.div<Props>`
   ${({ isSelected }) => css`
-    min-height: 390px;
-    width: 420px;
+    height: 62%;
+    width: 36%;
     background-color: rgba(17, 40, 114);
     position: absolute;
     top: 25%;
-    left: 58%;
+    left: 55%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -111,7 +111,7 @@ export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 380px;
+  width: 80%;
 `;
 
 export const Title = styled.div`
@@ -133,7 +133,7 @@ export const Price = styled.div`
 `;
 
 export const BuyButton = styled.img`
-  height: 20%;
+  height: 100%;
   transition: all 0.7s ease;
 
   &:hover {
