@@ -17,7 +17,17 @@ export const Coins = styled.img`
   height: 35px;
   position: absolute;
   top: 2%;
-  left: 10%;
+  left: 12%;
+`;
+
+export const CoinsNumber = styled.p`
+  position: absolute;
+  top: 2%;
+  left: 9.5%;
+  display: inline-block;
+  font-size: 25px;
+  font-family: 'Source Sans 3', sans-serif;
+  color: white;
 `;
 
 export const Avatar = styled.img`
