@@ -43,6 +43,26 @@ export const CloseIcon = styled.div`
   }
 `;
 
+export const CancelButton = styled.div`
+  padding: 4px 8px;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  font-family: Comic Sans MS, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.6rem;
+  color: #ffffff;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,18 +123,19 @@ export const Content = styled.div`
     margin-top: 8px;
     margin-bottom: 8px;
     cursor: pointer;
+    margin-left: 10px;
 
     &:hover {
       opacity: 0.9;
     }
   }
 
-  form{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const RankingTitle = styled.span`
@@ -230,4 +251,59 @@ export const ModalMessage = styled.span`
   text-align: center;
   color: #f7f7f7;
   margin-bottom: 16px;
+`;
+
+export const Visa = styled.img`
+  height: 70%;
+  margin-left: 15px;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const Boleto = styled.img`
+  height: 70%;
+  margin-left: 15px;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const Elo = styled.img`
+  height: 70%;
+  margin-left: 15px;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const Mastercard = styled.img`
+  height: 70%;
+  margin-left: 15px;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
+export const Pix = styled.img`
+  height: 70%;
+  margin-left: 15px;
+  transition: all 0.7s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 `;
