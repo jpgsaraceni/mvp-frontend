@@ -236,6 +236,7 @@ const icons = [
 const Game = () => {
   const sound = useSound();
   sound.setBackground(audios.background.phases.world);
+  const playerName = localStorage.getItem('@droplingo:name');
 
   const navigateTo = useNavigate();
   const [points, setPoints] = useState(100);
@@ -347,8 +348,18 @@ const Game = () => {
         <Modal
           title="PARABÉNS"
           type="choose_name"
-          RankingInput={<input type="text" placeholder="NOME" ref={nameRef} />}
-          message="INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANK."
+          RankingInput={
+            playerName ? (
+              <div>{playerName}</div>
+            ) : (
+              <input type="text" placeholder="NOME" ref={nameRef} />
+            )
+          }
+          message={
+            playerName
+              ? 'DESEJA INSERIR SUA PONTUAÇÃO NO RANKING?'
+              : 'INSIRA UM NOME PARA REGISTRAR A SUA PONTUAÇÃO NO RANKING.'
+          }
           open={openModal}
           onClose={() => setOpenModal(false)}
           onClick={async () => {
